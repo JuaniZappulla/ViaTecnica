@@ -1,0 +1,169 @@
+﻿@model ViaTecnicaWEB.Models.Turno_Cabecera
+
+@{
+    ViewBag.Title = "Create";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <main class="container">
+            <div class="d-flex align-items-center p-3 my-3 text-white rounded shadow-sm" style="background-color:dodgerblue">
+                <div class="lh-1">
+                    <h1 class="h6 mb-0 text-white lh-1">Nuevo Turno</h1>
+                    <small>Ingrese los siguientes para poder agendar un nuevo turno</small>
+                </div>
+            </div>
+
+            <div class="my-3 p-3 rounded shadow-sm ">
+                <h6 class="border-bottom pb-2 mb-0">Datos Personales</h6>
+                <div class="row g-3" style="display: flex;flex-direction: row;justify-content: center;">
+                    <div class="text-body-secondary pt-3 col-sm-4">
+                        <label for="Nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="Nombre" required placeholder="Nombre" />
+                    </div>
+                    <div class="text-body-secondary pt-3 col-sm-3">
+                        <label for="Apellido" class="form-label">Apellido</label>
+                        <input type="text" class="form-control" id="Apellido" required placeholder="Apellido" />
+                    </div>
+                    <div class="text-body-secondary pt-3 col-sm-3">
+                        <label for="Documento" class="form-label">Nro. Documento</label>
+                        <input type="text" class="form-control" id="Documento" required placeholder="Nro. Documento" />
+                    </div>
+                    <div class="pt-3 col-6">
+                        <label for="Email" class="form-label">Email <span class="text-body-secondary">(Opcional)</span></label>
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeHolder="email@ejemplo.com" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="pt-3 col-4">
+                        <label for="Telefono" class="form-label">Telefono</label>
+                        <input type="tel" class="form-control" id="Telefono" placeholder="2235XXXXXX">
+                        <div class="invalid-feedback">
+                            Por Favor ingrese un numero de telefono valido.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="my-3 p-3 bg-body rounded shadow-sm">
+                <h6 class="border-bottom pb-2 mb-0">Detalle del Turno</h6>
+                <div class="row g-3" style="display: flex;flex-direction: row;justify-content: center;">
+                    <div class="text-body-secondary pt-3 col-6">
+                        <label for="Direccion" class="form-label">Direccion</label>
+                        @Html.EditorFor(model => model.Direccion, new { htmlAttributes = new { @class = "form-control", @placeholder = "Direccion" } })
+                    </div>
+                    <div class="pt-3 col-2">
+                        <label for="Piso" class="form-label">Piso</label>
+                        <input type="tel" class="form-control" id="Piso" placeholder="XX">
+                        <div class="invalid-feedback">
+                            Por Favor ingrese un numero de piso valido.
+                        </div>
+                    </div>
+                    <div class="pt-3 col-2">
+                        <label for="Dpto" class="form-label">Departamento</label>
+                        <input type="tel" class="form-control" id="Dpto" placeholder="XX">
+                        <div class="invalid-feedback">
+                            Por Favor ingrese un numero de departamento valido.
+                        </div>
+                    </div>
+                    <div class="pt-3 col-md-4">
+                        <label for="FechaTurno" class="form-label">Fecha Turno</label>
+                        <input type="date" class="form-control" id="FechaTurno" required />
+                        @*@Html.EditorFor(model => model.Fecha_Turno, new { htmlAttributes = new { @class = "form-control" } })*@
+                        @*@Html.ValidationMessageFor(model => model.Fecha_Turno, "", new { @class = "text-danger" })*@
+                    </div>
+                    <div class="pt-3 col-md-4">
+                        <label for="HoraTurno" class="form-label">Hora Turno</label>
+                        <input type="time" class="form-control" id="HoraTurno" step="60" required />
+                        @*@Html.EditorFor(model => model.Fecha_Turno, new { htmlAttributes = new { @class = "form-control" } })*@
+                        @*@Html.ValidationMessageFor(model => model.Fecha_Turno, "", new { @class = "text-danger" })*@
+                    </div>
+                </div>
+            </div>
+        </main>
+        @*<h4>Turno_Cabecera</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Id_Cliente, "Id_Cliente", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Id_Cliente", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Id_Cliente, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Fecha_Turno, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Fecha_Turno, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Fecha_Turno, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Fecha_Creacion_Turno, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Fecha_Creacion_Turno, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Fecha_Creacion_Turno, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Telefono_Principal, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Telefono_Principal, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Telefono_Principal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Telefono_Secundario, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Telefono_Secundario, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Telefono_Secundario, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>*@
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script>
+    // Obtener el elemento input
+    const datetimeInput = document.getElementById('datetime-local');
+
+    // Función para ajustar los minutos a cero
+    function ajustarMinutosACero() {
+        if (datetimeInput.value) {
+            // Obtener la fecha y hora actual del input
+            const fechaHora = new Date(datetimeInput.value);
+
+            // Establecer los minutos a cero
+            fechaHora.setMinutes(0);
+
+            // Actualizar el valor del input con los minutos ajustados
+            datetimeInput.value = fechaHora.toISOString().slice(0, 16);
+        }
+    }
+
+    // Ejecutar la función al cargar la página y cada vez que cambie el valor del input
+    datetimeInput.addEventListener('change', ajustarMinutosACero);
+</script>

@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ViaTecnicaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Cliente">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Apellido" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Documento" Type="Int64" />
+    <Property Name="Fecha_Creacion" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Cliente_Direccion" Relationship="Self.fk_Cliente_Cliente_Direccion" FromRole="Cliente" ToRole="Cliente_Direccion" />
+    <NavigationProperty Name="Cliente_Email" Relationship="Self.fk_Cliente_Cliente_Email" FromRole="Cliente" ToRole="Cliente_Email" />
+    <NavigationProperty Name="Cliente_Telefono" Relationship="Self.fk_Cliente_Cliente_Telefono" FromRole="Cliente" ToRole="Cliente_Telefono" />
+    <NavigationProperty Name="Turno_Cabecera" Relationship="Self.pk_Cliente_Turno_Cabecera" FromRole="Cliente" ToRole="Turno_Cabecera" />
+  </EntityType>
+  <EntityType Name="Cliente_Direccion">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="Id_Cliente" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Id_Cliente" Type="Int32" Nullable="false" />
+    <Property Name="Direccion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Fecha_Creacion" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Cliente" Relationship="Self.fk_Cliente_Cliente_Direccion" FromRole="Cliente_Direccion" ToRole="Cliente" />
+  </EntityType>
+  <EntityType Name="Cliente_Email">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="Id_cliente" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Id_cliente" Type="Int32" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Fecha_Creacion" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Cliente" Relationship="Self.fk_Cliente_Cliente_Email" FromRole="Cliente_Email" ToRole="Cliente" />
+  </EntityType>
+  <EntityType Name="Cliente_Telefono">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="Id_Cliente" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Id_Cliente" Type="Int32" Nullable="false" />
+    <Property Name="Telefono" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Fecha_Creacion" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Cliente" Relationship="Self.fk_Cliente_Cliente_Telefono" FromRole="Cliente_Telefono" ToRole="Cliente" />
+  </EntityType>
+  <EntityType Name="Servicios">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Tarifa" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Fecha_Creacion" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Turno_Detalle" Relationship="Self.fk_Servicios_Turno_Detalle" FromRole="Servicios" ToRole="Turno_Detalle" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Turno_Cabecera">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Id_Cliente" Type="Int32" />
+    <Property Name="Fecha_Turno" Type="DateTime" Precision="0" />
+    <Property Name="Fecha_Creacion_Turno" Type="DateTime" Precision="0" />
+    <Property Name="Direccion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Telefono_Principal" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Telefono_Secundario" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Cliente" Relationship="Self.pk_Cliente_Turno_Cabecera" FromRole="Turno_Cabecera" ToRole="Cliente" />
+    <NavigationProperty Name="Turno_Detalle" Relationship="Self.fk_Turno_Cabecera_Turno_Detalle" FromRole="Turno_Cabecera" ToRole="Turno_Detalle" />
+  </EntityType>
+  <EntityType Name="Turno_Detalle">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="Id_Turno_Cabecera" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Id_Turno_Cabecera" Type="Int32" Nullable="false" />
+    <Property Name="Id_Servicio" Type="Int32" />
+    <Property Name="Tarifa" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Servicios" Relationship="Self.fk_Servicios_Turno_Detalle" FromRole="Turno_Detalle" ToRole="Servicios" />
+    <NavigationProperty Name="Turno_Cabecera" Relationship="Self.fk_Turno_Cabecera_Turno_Detalle" FromRole="Turno_Detalle" ToRole="Turno_Cabecera" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Usr" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Pass" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Fecha_Creacion" Type="DateTime" Precision="0" />
+  </EntityType>
+  <Association Name="fk_Cliente_Cliente_Direccion">
+    <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+    <End Role="Cliente_Direccion" Type="Self.Cliente_Direccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Cliente_Direccion">
+        <PropertyRef Name="Id_Cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Cliente_Cliente_Email">
+    <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+    <End Role="Cliente_Email" Type="Self.Cliente_Email" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Cliente_Email">
+        <PropertyRef Name="Id_cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Cliente_Cliente_Telefono">
+    <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+    <End Role="Cliente_Telefono" Type="Self.Cliente_Telefono" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Cliente_Telefono">
+        <PropertyRef Name="Id_Cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="pk_Cliente_Turno_Cabecera">
+    <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+    <End Role="Turno_Cabecera" Type="Self.Turno_Cabecera" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Turno_Cabecera">
+        <PropertyRef Name="Id_Cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Servicios_Turno_Detalle">
+    <End Role="Servicios" Type="Self.Servicios" Multiplicity="0..1" />
+    <End Role="Turno_Detalle" Type="Self.Turno_Detalle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Servicios">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Turno_Detalle">
+        <PropertyRef Name="Id_Servicio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Turno_Cabecera_Turno_Detalle">
+    <End Role="Turno_Cabecera" Type="Self.Turno_Cabecera" Multiplicity="1" />
+    <End Role="Turno_Detalle" Type="Self.Turno_Detalle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Turno_Cabecera">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Turno_Detalle">
+        <PropertyRef Name="Id_Turno_Cabecera" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ViaTecnicaEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+    <EntitySet Name="Cliente_Direccion" EntityType="Self.Cliente_Direccion" />
+    <EntitySet Name="Cliente_Email" EntityType="Self.Cliente_Email" />
+    <EntitySet Name="Cliente_Telefono" EntityType="Self.Cliente_Telefono" />
+    <EntitySet Name="Servicios" EntityType="Self.Servicios" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Turno_Cabecera" EntityType="Self.Turno_Cabecera" />
+    <EntitySet Name="Turno_Detalle" EntityType="Self.Turno_Detalle" />
+    <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+    <AssociationSet Name="fk_Cliente_Cliente_Direccion" Association="Self.fk_Cliente_Cliente_Direccion">
+      <End Role="Cliente" EntitySet="Cliente" />
+      <End Role="Cliente_Direccion" EntitySet="Cliente_Direccion" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Cliente_Cliente_Email" Association="Self.fk_Cliente_Cliente_Email">
+      <End Role="Cliente" EntitySet="Cliente" />
+      <End Role="Cliente_Email" EntitySet="Cliente_Email" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Cliente_Cliente_Telefono" Association="Self.fk_Cliente_Cliente_Telefono">
+      <End Role="Cliente" EntitySet="Cliente" />
+      <End Role="Cliente_Telefono" EntitySet="Cliente_Telefono" />
+    </AssociationSet>
+    <AssociationSet Name="pk_Cliente_Turno_Cabecera" Association="Self.pk_Cliente_Turno_Cabecera">
+      <End Role="Cliente" EntitySet="Cliente" />
+      <End Role="Turno_Cabecera" EntitySet="Turno_Cabecera" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Servicios_Turno_Detalle" Association="Self.fk_Servicios_Turno_Detalle">
+      <End Role="Servicios" EntitySet="Servicios" />
+      <End Role="Turno_Detalle" EntitySet="Turno_Detalle" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Turno_Cabecera_Turno_Detalle" Association="Self.fk_Turno_Cabecera_Turno_Detalle">
+      <End Role="Turno_Cabecera" EntitySet="Turno_Cabecera" />
+      <End Role="Turno_Detalle" EntitySet="Turno_Detalle" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
